@@ -119,7 +119,6 @@ class PokerHand:
         other_ranked = sorted(other_ranked, reverse=True)
 
         for i in range(0, len(self_ranked)):
-            #print(str(self_ranked[i]) + str(other_ranked[i]))
             if self_ranked[i] > other_ranked[i]:
                 return 1
             elif self_ranked[i] < other_ranked[i]:
@@ -144,7 +143,7 @@ class PokerHand:
             for i in range(len(self_pair)):
                 if self_pair[i] > other_pair[i]:
                     return 1
-                elif self_pair[i] < other_pair[i]:
+                elif other_pair[i] > self_pair[i]:
                     return -1
             return self.compare_high_card(other)
 
@@ -162,13 +161,13 @@ class PokerHand:
         self_pair.sort(reverse=True)
         other_pair.sort(reverse=True)
 
-        if len(self_pair) == 1:
+        if self.is_pair() and other.is_pair():
             for i in range(len(self_pair)):
                 if self_pair[i] > other_pair[i]:
                     return 1
                 elif self_pair[i] < other_pair[i]:
                     return -1
-            return self.compare_high_card(other)
+        return self.compare_high_card(other)
 
     def compare_to(self, other):
         """
@@ -201,16 +200,12 @@ class PokerHand:
         elif not self_is_two_pair and other_is_two_pair:
             return -1
 
-        self_is_pair = self.is_pair()
-        other_is_pair = other.is_pair()
-
-        if self_is_pair and other_is_pair:
+        if self.is_pair() and other.is_pair():
             return self.compare_pair(other)
-        elif self_is_pair and not other_is_pair:
+        elif self.is_pair() and not other.is_pair():
             return 1
-        elif not self_is_pair and other_is_pair:
+        elif not self.is_pair() and other.is_pair():
             return -1
-
         return self.compare_high_card(other)
 
     def __str__(self):
