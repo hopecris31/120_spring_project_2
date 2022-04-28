@@ -29,19 +29,33 @@ c12 = c.Card(12, 'Clubs')
 c13 = c.Card(13, 'Clubs')
 c14 = c.Card(14, 'Clubs')
 
+h6 = c.Card(6, 'Hearts')
+h10 = c.Card(10, 'Hearts')
+
+d6 = c.Card(6, 'Diamonds')
+d10 = c.Card(10, 'Diamonds')
+
+
 #hand1 = h.PokerHand(card_list1)
 
 flush1 = h.PokerHand([c10, c11, c12, c13, c14])  # highest flush hand
 flush2 = h.PokerHand([s9, s8, s7, s6, s5, s4])  # second-highest flush hand
 flush3 = h.PokerHand([c9, c8, c7, c6, c5, c4])  # same as hand above w different suits
 
-two_pair1 = h.PokerHand([c14, c10, c14, c10, c4])
+two_pair1 = h.PokerHand([c14, s14, c10, s10, c4])
+two_pair2 = h.PokerHand([c14, s14, c10, s10, s5])
+two_pair3 = h.PokerHand([s10, c10, c9, s9, s2])
+two_pair4 = h.PokerHand([c10, s10, c6, s6, c12])
+two_pair5 = h.PokerHand([h10, d10, h6, d6, s12])
 
-high_card1 = h.PokerHand([c4, c3, c5, c7, c8])
+pair1 = h.PokerHand([c11, s11, c5, s7, c2])
+pair2 = h.PokerHand([s10, c10, c7, s14, c3])
+pair3 = h.PokerHand([h10, d10, h6, c7, s11])
+pair4 = h.PokerHand([s10, c10, s6, s7, c11])
 
+high_card1 = h.PokerHand([c4, c3, s5, c7, c2])
 
-
-
+a = h.PokerHand([])
 
 if __name__ == "__main__":
     test_suite = t.create()
@@ -54,18 +68,18 @@ if __name__ == "__main__":
     t.assert_equals(test_suite, "(f4) If both hands are flush and exactly the same/equal, tie", 0, flush2.compare_to(flush3))
     print("Two Pair Tests:")
     print('')
-    t.assert_equals(test_suite, "(t1) If both hands two pair, winner has higher value pair", expected, actual)
-    t.assert_equals(test_suite, "(t2) If both hands two pair, and both pairs are same ranks, winner has high card", expected, actual)
-    t.assert_equals(test_suite, "(t3) If both hands two pair, and both highest pairs are equal, winner has higher value second pair", expected, actual)
-    t.assert_equals(test_suite, "(t4) If one hand two pair, and other is pair, winner has two pair", expected, actual)
-    t.assert_equals(test_suite, "(t5) If one hand two pair, and other is high card, winner has two pair", expected, actual)
-    t.assert_equals(test_suite, "(t6) If both hands are two pair and exactly the same/equal, tie", expected, actual)
+    t.assert_equals(test_suite, "(t1) If both hands two pair, winner has higher value pair", 1,two_pair2.compare_to(two_pair3))
+    t.assert_equals(test_suite, "(t2) If both hands two pair, and both pairs are same ranks, winner has high card", -1, two_pair1.compare_to(two_pair2))
+    t.assert_equals(test_suite, "(t3) If both hands two pair, and both highest pairs are equal, winner has higher value second pair", 1, two_pair3.compare_to(two_pair4))
+    t.assert_equals(test_suite, "(t4) If one hand two pair, and other is pair, winner has two pair", 1, two_pair4.compare_to(pair1))
+    t.assert_equals(test_suite, "(t5) If one hand two pair, and other is high card, winner has two pair", 1, two_pair4.compare_to(high_card1))
+    t.assert_equals(test_suite, "(t6) If both hands are two pair and exactly the same/equal, tie", 0, two_pair4.compare_to(two_pair5))
     print("Pair Tests:")
     print('')
-    t.assert_equals(test_suite, "(p1) If both hands pair, winner has pair with higher rank ", expected, actual)
-    t.assert_equals(test_suite, "(p2) If both hands same pair, winner has high card", expected, actual)
-    t.assert_equals(test_suite, "(p3) If one hand pair, other is high card, winner has pair", expected, actual)
-    t.assert_equals(test_suite, "(p4) If both hands are pair and exactly the same/equal, tie", expected, actual)
+    t.assert_equals(test_suite, "(p1) If both hands pair, winner has pair with higher rank ", 1, pair1.compare_to(pair2))
+    t.assert_equals(test_suite, "(p2) If both hands same pair, winner has high card", 1, pair2.compare_to(pair3))
+    t.assert_equals(test_suite, "(p3) If one hand pair, other is high card, winner has pair", -1, high_card1.compare_to(pair3))
+    t.assert_equals(test_suite, "(p4) If both hands are pair and exactly the same/equal, tie", 0, pair3.compare_to(pair4))
     print("High Card Tests:")
     print('')
     t.assert_equals(test_suite, "(h1) If both hands have all same ranks except one, winner has high card", expected, actual)
