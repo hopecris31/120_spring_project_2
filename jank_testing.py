@@ -32,11 +32,6 @@ card_list4 = [c13, c9, c6, c10, c13]  # pair
 hand2 = h.PokerHand(card_list2)
 hand4 = h.PokerHand(card_list4)
 
-print(hand2.__get_hand_ranks())
-print(hand2.__get_pairs())
-print('')
-print(hand4.__get_hand_ranks())
-print(hand4.__get_pairs())
 
 print(hand2.compare_to(hand4)) #-1
 
