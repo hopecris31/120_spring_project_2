@@ -33,13 +33,11 @@ c14 = c.Card(14, 'Clubs')
 
 flush1 = h.PokerHand([c10, c11, c12, c13, c14])  # highest flush hand
 flush2 = h.PokerHand([s9, s8, s7, s6, s5, s4])  # second-highest flush hand
+flush3 = h.PokerHand([c9, c8, c7, c6, c5, c4])  # same as hand above w different suits
 
+two_pair1 = h.PokerHand([c14, c10, c14, c10, c4])
 
 high_card1 = h.PokerHand([c4, c3, c5, c7, c8])
-
-
-
-
 
 
 
@@ -52,8 +50,8 @@ if __name__ == "__main__":
     print('')
     t.assert_equals(test_suite, "(f1) If both hands flush, winner has high card", 1, flush1.compare_to(flush2))
     t.assert_equals(test_suite, "(f2) If one hand is flush, other is high card, winner is flush", 1, flush1.compare_to(high_card1))
-    t.assert_equals(test_suite, "(f3) If one hand is flush, other is two pair, winner is flush", expected, actual)
-    t.assert_equals(test_suite, "(f4) If both hands are flush and exactly the same/equal, tie", expected, actual)
+    t.assert_equals(test_suite, "(f3) If one hand is flush, other is two pair, winner is flush", 1, flush1.compare_to(two_pair1))
+    t.assert_equals(test_suite, "(f4) If both hands are flush and exactly the same/equal, tie", 0, flush2.compare_to(flush3))
     print("Two Pair Tests:")
     print('')
     t.assert_equals(test_suite, "(t1) If both hands two pair, winner has higher value pair", expected, actual)
