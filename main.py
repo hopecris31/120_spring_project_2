@@ -4,8 +4,10 @@ main, runs the game
 import poker_hand as h
 import deck as d
 
+HAND_SIZE = 5
 
-def get_hand_cards(hand_size):
+
+def get_hand_cards(hand_size, deck):
     cards = []
     for i in range(hand_size):
         new_card = deck.deal()
@@ -13,7 +15,7 @@ def get_hand_cards(hand_size):
     return cards
 
 
-if __name__ == "__main__":
+def main():
     deck = d.Deck()
     deck.shuffle()
     correct_guesses = 0
@@ -22,15 +24,15 @@ if __name__ == "__main__":
     print("Enter 1 if hand 1 is better, -1 if hand 2 is better, or 0 if it's a tie")
     while game:  # change condition to while deck not empty, or while enough cards for hand
 
-        card_list1 = get_hand_cards(h.DEFAULT_HAND_SIZE)
-        card_list2 = get_hand_cards(h.DEFAULT_HAND_SIZE)
+        card_list1 = get_hand_cards(HAND_SIZE, deck)
+        card_list2 = get_hand_cards(HAND_SIZE, deck)
 
         hand1 = h.Hand(card_list1)
         hand2 = h.Hand(card_list2)
 
         print('')
-        print("Hand 1: ", hand1)
-        print("Hand 2: ", hand2)
+        print("Hand 1: ", str(hand1))
+        print("Hand 2: ", str(hand2))
         print('')
 
         correct_answer = hand1.compare_to(hand2)
@@ -44,6 +46,12 @@ if __name__ == "__main__":
             game = False
             print("correct answer: ", correct_answer, "your answer: ", user_answer)
             print("correct guesses: ", correct_guesses)
+            print("GAME OVER")
+
+
+if __name__ == "__main__":
+    main()
+
 
 
 

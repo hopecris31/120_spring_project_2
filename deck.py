@@ -49,3 +49,4 @@ class Deck:
             return None
         else:
             return self.__deck.pop(0)
+

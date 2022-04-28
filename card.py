@@ -29,8 +29,17 @@ class Card:
         """
         return self.__suit
 
-    def __str__(self):
-        return f'{self.__rank} {self.__suit}'
-
-    def __repr__(self):
-        return f'{self.__rank} {self.__suit}'
+    def __repr__(self):  # this runs whn you say str(somecard)
+        """ return this card as a printable string """
+        rank = self.get_rank()
+        if rank == '11':
+            rank_string = "Jack"
+        elif rank == '12':
+            rank_string = "Queen"
+        elif rank == '13':
+            rank_string = "King"
+        elif rank == '14':
+            rank_string = "Ace"
+        else:
+            rank_string = rank
+        return str(rank_string) + " of " + self.get_suit()
