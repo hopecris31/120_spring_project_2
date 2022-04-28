@@ -8,7 +8,12 @@ import deck as d
 HAND_SIZE = 5
 
 
-def get_hand_cards(hand_size, deck):
+def __get_hand_cards(hand_size, deck):
+    """
+    :param hand_size: size of hand
+    :param deck: a deck of cards
+    :return: the ranks of the cards in the hand
+    """
     cards = []
     for i in range(hand_size):
         new_card = deck.deal()
@@ -25,8 +30,8 @@ def main():
     print("Enter 1 if hand 1 is better, -1 if hand 2 is better, or 0 if it's a tie")
     while game and deck.enough_in_deck():  # change condition to while deck not empty, or while enough cards for hand
 
-        card_list1 = get_hand_cards(HAND_SIZE, deck)
-        card_list2 = get_hand_cards(HAND_SIZE, deck)
+        card_list1 = __get_hand_cards(HAND_SIZE, deck)
+        card_list2 = __get_hand_cards(HAND_SIZE, deck)
 
         hand1 = h.PokerHand(card_list1)
         hand2 = h.PokerHand(card_list2)

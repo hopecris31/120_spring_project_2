@@ -1,3 +1,7 @@
+"""
+Unit testing, testing the compare_to() method
+"""
+
 import testing_suite as t
 import card as c
 import poker_hand as h
@@ -34,9 +38,6 @@ h10 = c.Card(10, 'Hearts')
 
 d6 = c.Card(6, 'Diamonds')
 d10 = c.Card(10, 'Diamonds')
-
-
-#hand1 = h.PokerHand(card_list1)
 
 flush1 = h.PokerHand([c10, c11, c12, c13, c14])  # highest flush hand
 flush2 = h.PokerHand([s9, s8, s7, s6, s5, s4])  # second-highest flush hand
