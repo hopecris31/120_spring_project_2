@@ -53,7 +53,12 @@ pair2 = h.PokerHand([s10, c10, c7, s14, c3])
 pair3 = h.PokerHand([h10, d10, h6, c7, s11])
 pair4 = h.PokerHand([s10, c10, s6, s7, c11])
 
-high_card1 = h.PokerHand([c4, c3, s5, c7, c2])
+high_card1 = h.PokerHand([c4, c11, s12, c9, c2])
+high_card2 = h.PokerHand([s2, c3, s5, c7, s14])
+high_card3 = h.PokerHand([c2, s3, c5, s7, s8])
+high_card4 = h.PokerHand([s14, s13, c5, c6, c7])
+high_card5 = h.PokerHand([c14, c11, s4, s6, s10])
+high_card6 = h.PokerHand([s14, s11, c4, c6, c10])
 
 a = h.PokerHand([])
 
@@ -82,15 +87,15 @@ if __name__ == "__main__":
     t.assert_equals(test_suite, "(p4) If both hands are pair and exactly the same/equal, tie", 0, pair3.compare_to(pair4))
     print("High Card Tests:")
     print('')
-    t.assert_equals(test_suite, "(h1) If both hands have all same ranks except one, winner has high card", expected, actual)
-    t.assert_equals(test_suite, "(h2) If all ranks are different, winner has high card", expected, actual)
-    t.assert_equals(test_suite, "(h3) If both hands have same high card, winner has next highest card", expected, actual)
-    t.assert_equals(test_suite, "(h4) If both hands are high card and exactly the same.equal, tie", expected, actual)
+    t.assert_equals(test_suite, "(h1) If both hands have all same ranks except one, winner has high card", 1, high_card2.compare_to(high_card3))
+    t.assert_equals(test_suite, "(h2) If all ranks are different, winner has high card", -1, high_card1.compare_to(high_card2))
+    t.assert_equals(test_suite, "(h3) If both hands have same high card, winner has next highest card", 1, high_card4.compare_to(high_card5))
+    t.assert_equals(test_suite, "(h4) If both hands are high card and exactly the same.equal, tie", 0, high_card5.compare_to(high_card6))
     print('')
     print("Total tests: ", t.num_tests(test_suite))
     print("Fails: ", t.num_fails(test_suite))
     print("Passes:", t.num_passes(test_suite))
-    t.print_summary()
+    t.print_summary(test_suite)
 
 
 
