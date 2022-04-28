@@ -5,16 +5,19 @@ import card as c
 
 card_list = ['9 Clubs', '9' 'Hearts', '14' 'Spades', '11' 'Clubs', '12' 'Spades', '14' 'Clubs']
 
+c2 = c.Card(2, 'Spades')
+c3 = c.Card(3, 'Spades')
 c4 = c.Card(4, 'Spades')
 c5 = c.Card(5, 'Spades')
-c6 = c.Card(6, 'Clubs')
-c7 = c.Card(7, 'Hearts')
-c8 = c.Card(8, 'Diamonds')
+c6 = c.Card(6, 'Spades')
+c7 = c.Card(7, 'Spades')
+c8 = c.Card(8, 'Spades')
 c9 = c.Card(9, 'Spades')
-c10 = c.Card(10, 'Clubs')
+c10 = c.Card(10, 'Spades')
 c11 = c.Card(11, 'Spades')
 c12 = c.Card(12, 'Spades')
-c13 = c.Card(13, 'Hearts')
+c13 = c.Card(13, 'Spades')
+c14 = c.Card(14, 'Spades')
 
 
 card_list1 = [c4, c5, c6, c5, c8]
