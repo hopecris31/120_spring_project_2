@@ -38,15 +38,17 @@ def main():
         correct_answer = hand1.compare_to(hand2)
         user_answer = int(input("YOUR GUESS: "))
 
-        if hand1.compare_to(hand2) == user_answer and deck.enough_in_deck():
+        if hand1.compare_to(hand2) == user_answer:
             correct_guesses += 1
-            print("correct answer: ", correct_answer, "your answer: ", user_answer)
-            print("correct guesses: ", correct_guesses)
         else:
             game = False
-            print("correct answer: ", correct_answer, "your answer: ", user_answer)
-            print("correct guesses: ", correct_guesses)
+
+        print("correct answer: ", correct_answer, "your answer: ", user_answer)
+        print("correct guesses: ", correct_guesses)
+        if not game:
             print("GAME OVER")
+        if not deck.enough_in_deck():
+            print("GAME OVER: all hands have been dealt!")
 
 
 if __name__ == "__main__":

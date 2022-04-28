@@ -2,8 +2,7 @@
 models a poker hand
 """
 
-DEFAULT_HAND_SIZE = 5
-DEFAULT_HANDS_PER_DECK = 10  # a standard deck of 52 cards would be able to create 10 hands of 5 cards
+HAND_SIZE = 5
 
 
 class PokerHand:
@@ -36,7 +35,6 @@ class PokerHand:
 
     def check_hand_type(self):
         """
-        :param hand: a hand of 5 cards
         :return: the type of hand it is
         """
 
@@ -79,9 +77,10 @@ class PokerHand:
         :return: list of pair ranks
         """
         list_pairs = []
+
         if self.is_pair():
-            for card1 in range(DEFAULT_HAND_SIZE-1):
-                for card2 in range(card1 + 1, DEFAULT_HAND_SIZE):
+            for card1 in range(HAND_SIZE-1):  # might have to delete -1
+                for card2 in range(card1 + 1, HAND_SIZE):
                     if self.__hand[card1].get_rank() == self.__hand[card2].get_rank() and self.__hand[card1].get_rank() not in list_pairs:
                         list_pairs.append(self.__hand[card1].get_rank())
         return list_pairs
@@ -91,15 +90,15 @@ class PokerHand:
         iterates through hand, determines if two pairs exist within the hand
         :return: True if there is a two pair, four of a kind, or full house
         """
-        if self.is_pair():  # methods within a class do not take self as parameter?
+        if self.is_pair():
             pairs = 0
             ranks = self.get_hand_ranks()
-            for card in range(len(ranks)):
-                for card_compare in range(len(ranks) - card - 1):
-                    if ranks[card] == ranks[card + card_compare + 1]:
+            for card1 in range(len(ranks)):
+                for card2 in range(len(ranks) - card1 - 1):
+                    if ranks[card1] == ranks[card1 + card2 + 1]:
                         pairs += 1
-                        ranks[card] = 'none'
-                        ranks[card + card_compare + 1] = 'none1'
+                        ranks[card1] = 'no'
+                        ranks[card1 + card2 + 1] = 'nope'
                         if pairs == 2:
                             return True
         return False
