@@ -27,7 +27,7 @@ def main():
     correct_guesses = 0
 
     game = True
-    print("Enter 1 if hand 1 is better, -1 if hand 2 is better, or 0 if it's a tie")
+    print("Enter 1 if hand 1 is better,  if hand -1 is better, or 0 if it's a tie")
     while game and deck.enough_in_deck():  # change condition to while deck not empty, or while enough cards for hand
 
         card_list1 = __get_hand_cards(HAND_SIZE, deck)
@@ -44,7 +44,7 @@ def main():
         correct_answer = hand1.compare_to(hand2)
         user_answer = int(input("YOUR GUESS: "))
 
-        if hand1.compare_to(hand2) == user_answer:
+        if correct_answer == user_answer:
             correct_guesses += 1
         else:
             game = False

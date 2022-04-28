@@ -135,9 +135,8 @@ class PokerHand:
 
         self_pair = self.__get_pairs()
         other_pair = other.__get_pairs()
-
-        self_pair = sorted(self_pair, reverse=True)
-        other_pair = sorted(other_pair, reverse=True)
+        self_pair.sort(reverse=True)
+        other_pair.sort(reverse=True)
 
         if len(self_pair) == 2:
             for i in range(len(self_pair)):
@@ -157,7 +156,6 @@ class PokerHand:
 
         self_pair = self.__get_pairs()
         other_pair = other.__get_pairs()
-
         self_pair.sort(reverse=True)
         other_pair.sort(reverse=True)
 
