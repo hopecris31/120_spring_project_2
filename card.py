@@ -3,7 +3,7 @@ models a card
 """
 
 RANKS = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-SUITS = ["Diamonds", "Clubs", "Hearts", "Spades"]  # do we have to use the word or can we represent using letters
+SUITS = ["Diamonds", "Clubs", "Hearts", "Spades"]
 
 
 class Card:
@@ -23,13 +23,13 @@ class Card:
         """
         return self.__rank
 
-    def get_suit(self):  # this function will have to work differently now that the suit entire word is typed out
+    def get_suit(self):
         """
         :return: suit
         """
         return self.__suit
 
-    def __repr__(self):  # this runs whn you say str(somecard)
+    def __repr__(self):
         """ return this card as a printable string """
         rank = self.get_rank()
         if rank == 11:

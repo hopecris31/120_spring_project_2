@@ -1,6 +1,7 @@
 """
 models a deck of cards
 """
+
 import random
 import card as c
 
