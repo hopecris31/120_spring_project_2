@@ -204,6 +204,7 @@ class PokerHand:
             return 1
         elif not self.__is_pair() and other.__is_pair():
             return -1
+
         return self.__compare_high_card(other)
 
     def __str__(self):

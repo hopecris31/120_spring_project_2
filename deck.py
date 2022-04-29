@@ -50,3 +50,8 @@ class Deck:
             return None
         else:
             return self.__deck.pop(0)
+        # for a list of n cards, pop(0) must reassign n-1 references.  O(n) running time.  try and make
+        # this take constant time
+        # make deal method, but just returning the current index of an iterator.  moves through deck
+        # deals the "current" card before moving to the next index.  if i = -1, then shuffle deck, set i=0
+        # indexing is a constant time operation
