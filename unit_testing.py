@@ -49,7 +49,7 @@ two_pair2 = h.PokerHand([c14, s14, c10, s10, s5])
 two_pair3 = h.PokerHand([s10, c10, c9, s9, s2])
 two_pair4 = h.PokerHand([c10, s10, c6, s6, c12])
 two_pair5 = h.PokerHand([h10, d10, h6, d6, s12])
-two_pair6 = h.PokerHand([c12, s12,c10, s10, c4])
+two_pair6 = h.PokerHand([c12, s12, c10, s10, c4])
 
 pair1 = h.PokerHand([c11, s11, c5, s7, c2])
 pair2 = h.PokerHand([s10, c10, c7, s14, c3]) # pair 10s

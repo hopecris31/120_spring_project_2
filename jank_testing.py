@@ -10,28 +10,38 @@ c3 = c.Card(3, 'Spades')
 c4 = c.Card(4, 'Spades')
 c5 = c.Card(5, 'Spades')
 c6 = c.Card(6, 'Spades')
-c7 = c.Card(7, 'Spades')
-c8 = c.Card(8, 'Spades')
-c9 = c.Card(9, 'Spades')
-c10 = c.Card(10, 'Spades')
-c11 = c.Card(11, 'Spades')
-c12 = c.Card(12, 'Spades')
-c13 = c.Card(13, 'Spades')
-c14 = c.Card(14, 'Spades')
+c7 = c.Card(7, 'Hearts')
+c8 = c.Card(8, 'Hearts')
+c9 = c.Card(9, 'Hearts')
+c10 = c.Card(10, 'Hearts')
+c11 = c.Card(11, 'Hearts')
+c12 = c.Card(12, 'Hearts')
+c13 = c.Card(13, 'Hearts')
+c14 = c.Card(14, 'Hearts')
 
 
 card_list1 = [c4, c5, c6, c5, c8]
-card_list3 = [c13, c12, c12, c12, c8]
+
+card_list3 = [c13, c12, c12, c12, c8] # three pair
+card_list3b = [c4, c4, c6, c4, c8] # inferior three pair
 
 hand1 = h.PokerHand(card_list1)
 hand3 = h.PokerHand(card_list3)
+hand3b = h.PokerHand(card_list3b)
 
 
-card_list2 = [c13, c9, c6, c8, c13]  # pair
-card_list4 = [c13, c9, c6, c10, c13]  # pair
+card_list2 = [c13, c13, c13, c13, c4]  # pair
+card_list4 = [c13, c10, c10, c10, c10]  # pair
 hand2 = h.PokerHand(card_list2)
 hand4 = h.PokerHand(card_list4)
 
 
+print(hand3b.compare_to(hand3))
+#print(hand3.is_three_pair())
+#print(hand2.is_four_pair())
+#print(hand4.is_four_pair())
+#print(hand2.get_hand_ranks)
 print(hand2.compare_to(hand4)) #-1
+
+#print(hand2.get_pairs())
 

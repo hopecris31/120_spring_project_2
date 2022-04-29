@@ -71,21 +71,6 @@ class PokerHand:
                     return True
         return False
 
-    def __get_pairs(self):
-        """
-        identifies a pair in a hand, and adds it to a list
-        :return: list of pair ranks
-        """
-        list_pairs = []
-
-        if self.__is_pair():
-            for card1 in range(HAND_SIZE-1):  # might have to delete -1
-                for card2 in range(card1 + 1, HAND_SIZE):
-                    if self.__hand[card1].get_rank() == self.__hand[card2].get_rank() and self.__hand[card1].get_rank()\
-                            not in list_pairs:
-                        list_pairs.append(self.__hand[card1].get_rank())
-        return list_pairs
-
     def __is_two_pair(self):
         """
         iterates through hand, determines if two pairs exist within the hand
@@ -104,47 +89,36 @@ class PokerHand:
                             return True
         return False
 
-    def __compare_high_card(self, other):
+    def __is_three_pair(self):
+        ranks = self.__get_hand_ranks()
+        ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
+        if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 3:
+            return True
+        else:
+            return False
+
+    def __is_four_pair(self):
+        ranks = self.__get_hand_ranks()
+        ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
+        if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 4:
+            return True
+        else:
+            return False
+
+    def __get_pairs(self):
         """
-        orders the hand from least to greatest, then compares each of the highest values.
-        keeps comparing until the highest card is found
-        :param other: a second poker hand
-        :return: 1 if self has highest card, -1 of other has highest card, and 0 if tie
+        identifies a pair in a hand, and adds it to a list
+        :return: list of pair ranks
         """
+        list_pairs = []
 
-        self_ranked = self.__get_hand_ranks()
-        other_ranked = other.__get_hand_ranks()
-
-        self_ranked = sorted(self_ranked, reverse=True)
-        other_ranked = sorted(other_ranked, reverse=True)
-
-        for i in range(0, len(self_ranked)):
-            if self_ranked[i] > other_ranked[i]:
-                return 1
-            elif self_ranked[i] < other_ranked[i]:
-                return -1
-        return 0
-
-    def __compare_two_pair(self, other):
-        """
-        compares the ranks of each two pair, returns the two pair of higher rank.
-        if both two pairs are the same, then compare the rank of remaining card
-        :param other: a second two pair
-        :return: 1 if self has higher value hand, -1 of other has highest value hand, and 0 if tie
-        """
-
-        self_pair = self.__get_pairs()
-        other_pair = other.__get_pairs()
-        self_pair.sort(reverse=True)
-        other_pair.sort(reverse=True)
-
-        if len(self_pair) == 2:
-            for i in range(len(self_pair)):
-                if self_pair[i] > other_pair[i]:
-                    return 1
-                elif other_pair[i] > self_pair[i]:
-                    return -1
-            return self.__compare_high_card(other)
+        if self.__is_pair():
+            for card1 in range(HAND_SIZE):  # might have to delete -1
+                for card2 in range(card1 + 1, HAND_SIZE):
+                    if self.__hand[card1].get_rank() == self.__hand[card2].get_rank() and self.__hand[card1].get_rank()\
+                            not in list_pairs:
+                        list_pairs.append(self.__hand[card1].get_rank())
+        return list_pairs
 
     def __compare_pair(self, other):
         """
@@ -167,6 +141,66 @@ class PokerHand:
                     return -1
         return self.__compare_high_card(other)
 
+    def __compare_two_pair(self, other):
+        """
+        compares the ranks of each two pair, returns the two pair of higher rank.
+        if both two pairs are the same, then compare the rank of remaining card
+        :param other: a second two pair
+        :return: 1 if self has higher value hand, -1 of other has highest value hand, and 0 if tie
+        """
+
+        self_pair = self.__get_pairs()
+        other_pair = other.__get_pairs()
+        self_pair.sort(reverse=True)
+        other_pair.sort(reverse=True)
+
+        for i in range(len(self_pair)):
+            if self_pair[i] > other_pair[i]:
+                return 1
+            elif other_pair[i] > self_pair[i]:
+                return -1
+        return self.__compare_high_card(other)
+
+    def compare_three_pair(self, other):
+        """
+
+        :param other:
+        :return:
+        """
+        self_pair = self.__get_pairs()
+        other_pair = other.__get_pairs()
+        self_pair.sort(reverse=True)
+        other_pair.sort(reverse=True)
+
+        for i in range(len(self_pair)):
+            if self_pair[i] > other_pair[i]:
+                return 1
+            elif other_pair[i] > self_pair[i]:
+                return -1
+            else:
+                return self.__compare_high_card(other)
+
+    def __compare_high_card(self, other):
+        """
+        orders the hand from least to greatest, then compares each of the highest values.
+        keeps comparing until the highest card is found
+        :param other: a second poker hand
+        :return: 1 if self has highest card, -1 of other has highest card, and 0 if tie
+        """
+
+        self_ranked = self.__get_hand_ranks()
+        other_ranked = other.__get_hand_ranks()
+
+        self_ranked = sorted(self_ranked, reverse=True)
+        other_ranked = sorted(other_ranked, reverse=True)
+
+        for i in range(0, len(self_ranked)):
+            if self_ranked[i] > other_ranked[i]:
+                return 1
+            elif self_ranked[i] < other_ranked[i]:
+                return -1
+        return 0
+
     def compare_to(self, other):
         """
          Determines which of two poker hands is worth more. Returns an int
@@ -178,24 +212,32 @@ class PokerHand:
          self is worth MORE than other_hand
         """
 
-        self_is_flush = self.__is_flush()
-        other_is_flush = other.__is_flush()
-
-        if self_is_flush and other_is_flush:
+        if self.__is_flush() and other.__is_flush():
             return self.__compare_high_card(other)
-        elif self_is_flush and not other_is_flush:
+        elif self.__is_flush() and not other.__is_flush():
             return 1
-        elif not self_is_flush and other_is_flush:
+        elif not self.__is_flush() and other.__is_flush():
             return -1
 
-        self_is_two_pair = self.__is_two_pair()
-        other_is_two_pair = other.__is_two_pair()
-
-        if self_is_two_pair and other_is_two_pair:
-            return self.__compare_two_pair(other)
-        elif self_is_two_pair and not other_is_two_pair:
+        if self.__is_four_pair() and other.__is_four_pair():
+            return self.compare_three_pair(other)
+        elif self.__is_four_pair() and not other.__is_four_pair():
             return 1
-        elif not self_is_two_pair and other_is_two_pair:
+        elif not self.__is_four_pair() and other.__is_four_pair():
+            return -1
+
+        if self.__is_three_pair() and other.__is_three_pair():
+            return self.compare_three_pair(other)
+        elif self.__is_three_pair() and not other.__is_three_pair():
+            return 1
+        elif not self.__is_three_pair() and other.__is_three_pair():
+            return -1
+
+        if self.__is_two_pair() and other.__is_two_pair():
+            return self.__compare_two_pair(other)
+        elif self.__is_two_pair() and not other.__is_two_pair():
+            return 1
+        elif not self.__is_two_pair() and other.__is_two_pair():
             return -1
 
         if self.__is_pair() and other.__is_pair():

@@ -12,7 +12,7 @@ def __get_hand_cards(hand_size, deck):
     """
     :param hand_size: size of hand
     :param deck: a deck of cards
-    :return: the ranks of the cards in the hand
+    :return: a list of card objects
     """
     cards = []
     for i in range(hand_size):
