@@ -110,8 +110,3 @@ if __name__ == "__main__":
     print("Fails: ", t.num_fails(test_suite))
     print("Passes:", t.num_passes(test_suite))
     t.print_summary(test_suite)
-
-
-
-
-

@@ -33,7 +33,7 @@ class Deck:
     def enough_in_deck(self):
         """
         checks if there are enough cards in the deck to make another hand
-        :return: True or False, depending if there are enough cards
+        :return: True if there are enough cards to make hand, False if not
         """
         if len(self.__deck) >= HAND_SIZE:
             enough = True

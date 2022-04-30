@@ -35,6 +35,7 @@ class PokerHand:
 
     def __get_hand_type(self):
         """
+        determines the type of hand
         :return: the type of hand it is
         """
 
@@ -45,7 +46,7 @@ class PokerHand:
         elif self.__is_four_kind():
             return 'Four Kind'
         elif self.__is_three_kind():
-            return 'Three Pair'
+            return 'Three Kind'
         elif self.__is_pair():
             return 'Pair'
         else:
@@ -64,9 +65,8 @@ class PokerHand:
 
     def __is_pair(self):
         """
-        checks hand, iterates one pair at a time and tries all card combinations for pairs.
-        if pair is found, returns True.
-        :return: True when a pair or three of a kind is detected
+        determines if a hand is a pair
+        :return: True if pair, False if not
         """
         ranks = self.__get_hand_ranks()
         for card1 in range(len(ranks)):
@@ -77,8 +77,8 @@ class PokerHand:
 
     def __is_two_pair(self):
         """
-        iterates through hand, determines if two pairs exist within the hand
-        :return: True if there is a two pair, four of a kind, or full house
+        determines if a hand is a two pair
+        :return: True if two pair, False if not
         """
         if self.__is_pair():
             pairs = 0
@@ -94,6 +94,10 @@ class PokerHand:
         return False
 
     def __is_three_kind(self):
+        """
+        identifies if a hand is three of a kind
+        :return: True of three of a kind, False if not
+        """
         ranks = self.__get_hand_ranks()
         ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
         if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 3:
@@ -102,6 +106,10 @@ class PokerHand:
             return False
 
     def __is_four_kind(self):
+        """
+        identifies if a hand is a four of a kind
+        :return: True if four of a kind, False if not
+        """
         ranks = self.__get_hand_ranks()
         ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
         if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 4:
@@ -117,19 +125,18 @@ class PokerHand:
         list_pairs = []
 
         if self.__is_pair():
-            for card1 in range(HAND_SIZE):  # might have to delete -1
+            for card1 in range(HAND_SIZE):
                 for card2 in range(card1 + 1, HAND_SIZE):
                     if self.__hand[card1].get_rank() == self.__hand[card2].get_rank() and self.__hand[card1].get_rank()\
                             not in list_pairs:
                         list_pairs.append(self.__hand[card1].get_rank())
         return list_pairs
 
-    def __compare_pair(self, other):
+    def __compare_hand_same_type(self, other):
         """
-        compares the ranks of each pair, returns the pair of higher rank.
-        if both pairs are the same, then compare the highest ranking remaining cards
+        if a hand is of the same type, returns the hand with the higher ranks
         :param other: a second pair
-        :return: 1 if self has higher value hand, -1 of other has highest value hand, and 0 if tie
+        :return: 1 if self has higher value hand, -1 of other has higher value hand, and 0 if tie
         """
 
         self_pair = self.__get_pairs()
@@ -144,48 +151,6 @@ class PokerHand:
                 elif self_pair[i] < other_pair[i]:
                     return -1
         return self.__compare_high_card(other)
-
-    def __compare_two_pair(self, other):
-        """
-        compares the ranks of each two pair, returns the two pair of higher rank.
-        if both two pairs are the same, then compare the rank of remaining card
-        :param other: a second two pair
-        :return: 1 if self has higher value hand, -1 of other has highest value hand, and 0 if tie
-        """
-
-        self_pair = self.__get_pairs()
-        other_pair = other.__get_pairs()
-        self_pair.sort(reverse=True)
-        other_pair.sort(reverse=True)
-
-        for i in range(len(self_pair)):
-            if self_pair[i] > other_pair[i]:
-                return 1
-            elif other_pair[i] > self_pair[i]:
-                return -1
-        return self.__compare_high_card(other)
-
-    def compare_three_kind(self, other):
-        """
-
-        :param other:
-        :return:
-        """
-        self_pair = self.__get_pairs()
-        other_pair = other.__get_pairs()
-        self_pair.sort(reverse=True)
-        other_pair.sort(reverse=True)
-
-        for i in range(len(self_pair)):
-            if self_pair[i] > other_pair[i]:
-                return 1
-            elif other_pair[i] > self_pair[i]:
-                return -1
-            else:
-                return self.__compare_high_card(other)
-
-    def compare_four_kind(self):
-        pass
 
     def __compare_high_card(self, other):
         """
@@ -208,15 +173,15 @@ class PokerHand:
                 return -1
         return 0
 
-    def hand_type_worth(self):
+    def __hand_type_worth(self):
         if self.__is_flush():
-            return 6
-        elif self.__is_four_kind():
-            return 5
-        elif self.__is_two_pair():
             return 4
-        elif self.__is_three_kind():
+        elif self.__is_four_kind():
             return 3
+        elif self.__is_two_pair():
+            return 3
+        elif self.__is_three_kind():
+            return 2
         elif self.__is_pair():
             return 2
         else:
@@ -233,45 +198,25 @@ class PokerHand:
          self is worth MORE than other_hand
         """
         if self.__get_hand_type() != other.__get_hand_type():
-            if self.hand_type_worth() > other.hand_type_worth():
+            if self.__hand_type_worth() > other.__hand_type_worth():
                 return 1
-            if other.hand_type_worth() > self.hand_type_worth():
+            if other.__hand_type_worth() > self.__hand_type_worth():
                 return -1
 
         if self.__is_flush() and other.__is_flush():
             return self.__compare_high_card(other)
-        elif self.__is_flush() and not other.__is_flush():
-            return 1
-        elif not self.__is_flush() and other.__is_flush():
-            return -1
 
         if self.__is_four_kind() and other.__is_four_kind():
-            return self.compare_three_kind(other)
-        elif self.__is_four_kind() and not other.__is_four_kind():
-            return 1
-        elif not self.__is_four_kind() and other.__is_four_kind():
-            return -1
+            return self.__compare_hand_same_type(other)
 
         if self.__is_three_kind() and other.__is_three_kind():
-            return self.compare_three_kind(other)
-        elif self.__is_three_kind() and not other.__is_three_kind():
-            return 1
-        elif not self.__is_three_kind() and other.__is_three_kind():
-            return -1
+            return self.__compare_hand_same_type(other)
 
         if self.__is_two_pair() and other.__is_two_pair():
-            return self.__compare_two_pair(other)
-        elif self.__is_two_pair() and not other.__is_two_pair():
-            return 1
-        elif not self.__is_two_pair() and other.__is_two_pair():
-            return -1
+            return self.__compare_hand_same_type(other)
 
         if self.__is_pair() and other.__is_pair():
-            return self.__compare_pair(other)
-        elif self.__is_pair() and not other.__is_pair():
-            return 1
-        elif not self.__is_pair() and other.__is_pair():
-            return -1
+            return self.__compare_hand_same_type(other)
 
         return self.__compare_high_card(other)
 
