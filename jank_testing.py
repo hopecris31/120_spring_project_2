@@ -1,5 +1,5 @@
 import poker_hand as h
-import main as m
+import unit_testing as u
 import card as c
 
 
@@ -20,14 +20,18 @@ c13 = c.Card(13, 'Hearts')
 c14 = c.Card(14, 'Hearts')
 
 
-card_list1 = [c4, c5, c6, c5, c8]
+card_list1 = [c10, c5, c6, c10, c5]
+card_list1b = [c14, c5, c4, c12, c7]
 
-card_list3 = [c13, c12, c12, c12, c8] # three pair
-card_list3b = [c4, c4, c6, c4, c8] # inferior three pair
+card_list3 = [c3, c12, c12, c12, c2] # three pair
+card_list3b = [c12, c12, c10, c12, c3] # inferior three pair
 
 hand1 = h.PokerHand(card_list1)
+hand1b = h.PokerHand(card_list1b)
 hand3 = h.PokerHand(card_list3)
 hand3b = h.PokerHand(card_list3b)
+
+
 
 
 card_list2 = [c13, c13, c13, c13, c4]  # pair
@@ -35,13 +39,14 @@ card_list4 = [c13, c10, c10, c10, c10]  # pair
 hand2 = h.PokerHand(card_list2)
 hand4 = h.PokerHand(card_list4)
 
-
-print(hand3b.compare_to(hand3))
+#print(hand1.compare_to(hand1b))
+#print(hand3.compare_to(hand3b))
+print(u.pair5.compare_to(u.two_pair5))
 #print(hand3.is_three_pair())
 #print(hand2.is_four_pair())
 #print(hand4.is_four_pair())
 #print(hand2.get_hand_ranks)
-print(hand2.compare_to(hand4)) #-1
+#print(hand2.compare_to(hand4)) #-1
 
 #print(hand2.get_pairs())
 

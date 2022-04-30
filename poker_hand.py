@@ -33,7 +33,7 @@ class PokerHand:
             hand_ranks.append(rank)
         return hand_ranks
 
-    def __check_hand_type(self):
+    def __get_hand_type(self):
         """
         :return: the type of hand it is
         """
@@ -42,6 +42,10 @@ class PokerHand:
             return 'Flush'
         elif self.__is_two_pair():
             return 'Two Pair'
+        elif self.__is_four_kind():
+            return 'Four Kind'
+        elif self.__is_three_kind():
+            return 'Three Pair'
         elif self.__is_pair():
             return 'Pair'
         else:
@@ -89,7 +93,7 @@ class PokerHand:
                             return True
         return False
 
-    def __is_three_pair(self):
+    def __is_three_kind(self):
         ranks = self.__get_hand_ranks()
         ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
         if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 3:
@@ -97,7 +101,7 @@ class PokerHand:
         else:
             return False
 
-    def __is_four_pair(self):
+    def __is_four_kind(self):
         ranks = self.__get_hand_ranks()
         ranks_by_occurrence = sorted(ranks, key=ranks.count, reverse=True)
         if ranks_by_occurrence.count(ranks_by_occurrence[0]) == 4:
@@ -161,7 +165,7 @@ class PokerHand:
                 return -1
         return self.__compare_high_card(other)
 
-    def compare_three_pair(self, other):
+    def compare_three_kind(self, other):
         """
 
         :param other:
@@ -179,6 +183,9 @@ class PokerHand:
                 return -1
             else:
                 return self.__compare_high_card(other)
+
+    def compare_four_kind(self):
+        pass
 
     def __compare_high_card(self, other):
         """
@@ -201,6 +208,20 @@ class PokerHand:
                 return -1
         return 0
 
+    def hand_type_worth(self):
+        if self.__is_flush():
+            return 6
+        elif self.__is_four_kind():
+            return 5
+        elif self.__is_two_pair():
+            return 4
+        elif self.__is_three_kind():
+            return 3
+        elif self.__is_pair():
+            return 2
+        else:
+            return 1
+
     def compare_to(self, other):
         """
          Determines which of two poker hands is worth more. Returns an int
@@ -211,6 +232,11 @@ class PokerHand:
          zero if they are worth the SAME (a tie), and a positive number if
          self is worth MORE than other_hand
         """
+        if self.__get_hand_type() != other.__get_hand_type():
+            if self.hand_type_worth() > other.hand_type_worth():
+                return 1
+            if other.hand_type_worth() > self.hand_type_worth():
+                return -1
 
         if self.__is_flush() and other.__is_flush():
             return self.__compare_high_card(other)
@@ -219,18 +245,18 @@ class PokerHand:
         elif not self.__is_flush() and other.__is_flush():
             return -1
 
-        if self.__is_four_pair() and other.__is_four_pair():
-            return self.compare_three_pair(other)
-        elif self.__is_four_pair() and not other.__is_four_pair():
+        if self.__is_four_kind() and other.__is_four_kind():
+            return self.compare_three_kind(other)
+        elif self.__is_four_kind() and not other.__is_four_kind():
             return 1
-        elif not self.__is_four_pair() and other.__is_four_pair():
+        elif not self.__is_four_kind() and other.__is_four_kind():
             return -1
 
-        if self.__is_three_pair() and other.__is_three_pair():
-            return self.compare_three_pair(other)
-        elif self.__is_three_pair() and not other.__is_three_pair():
+        if self.__is_three_kind() and other.__is_three_kind():
+            return self.compare_three_kind(other)
+        elif self.__is_three_kind() and not other.__is_three_kind():
             return 1
-        elif not self.__is_three_pair() and other.__is_three_pair():
+        elif not self.__is_three_kind() and other.__is_three_kind():
             return -1
 
         if self.__is_two_pair() and other.__is_two_pair():
