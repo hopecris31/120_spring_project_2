@@ -125,8 +125,8 @@ class PokerHand:
         list_pairs = []
 
         if self.__is_pair():
-            for card1 in range(HAND_SIZE):
-                for card2 in range(card1 + 1, HAND_SIZE):
+            for card1 in range(len(self.__get_hand_ranks())):
+                for card2 in range(card1 + 1, len(self.__get_hand_ranks())):
                     if self.__hand[card1].get_rank() == self.__hand[card2].get_rank() and self.__hand[card1].get_rank()\
                             not in list_pairs:
                         list_pairs.append(self.__hand[card1].get_rank())
