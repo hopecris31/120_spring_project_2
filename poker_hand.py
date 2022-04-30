@@ -2,8 +2,6 @@
 models a poker hand
 """
 
-HAND_SIZE = 5
-
 
 class PokerHand:
 
