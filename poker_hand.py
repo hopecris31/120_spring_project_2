@@ -42,9 +42,9 @@ class PokerHand:
         elif self.__is_two_pair():
             return 'Two Pair'
         elif self.__is_four_kind():
-            return 'Four Kind'
+            return 'Two Pair'  # because our code recognizes 4 kind as two pair
         elif self.__is_three_kind():
-            return 'Three Kind'
+            return 'Pair'  # because our code recognizes 3 kind as pair
         elif self.__is_pair():
             return 'Pair'
         else:
@@ -195,25 +195,12 @@ class PokerHand:
          zero if they are worth the SAME (a tie), and a positive number if
          self is worth MORE than other_hand
         """
-        if self.__get_hand_type() != other.__get_hand_type():
-            if self.__hand_type_worth() > other.__hand_type_worth():
-                return 1
-            if other.__hand_type_worth() > self.__hand_type_worth():
-                return -1
+        if self.__hand_type_worth() > other.__hand_type_worth():
+            return 1
+        if other.__hand_type_worth() > self.__hand_type_worth():
+            return -1
 
-        if self.__is_flush() and other.__is_flush():
-            return self.__compare_high_card(other)
-
-        if self.__is_four_kind() and other.__is_four_kind():
-            return self.__compare_hand_same_type(other)
-
-        if self.__is_three_kind() and other.__is_three_kind():
-            return self.__compare_hand_same_type(other)
-
-        if self.__is_two_pair() and other.__is_two_pair():
-            return self.__compare_hand_same_type(other)
-
-        if self.__is_pair() and other.__is_pair():
+        if self.__get_hand_type() == other.__get_hand_type():
             return self.__compare_hand_same_type(other)
 
         return self.__compare_high_card(other)

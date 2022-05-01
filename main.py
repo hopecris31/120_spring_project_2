@@ -27,7 +27,7 @@ def main():
     correct_guesses = 0
 
     game = True
-    print("Enter 1 if hand 1 is better,  2 if hand 2 is better, or 0 if it's a tie")
+    print("Enter 1 if hand 1 is better,  2 (or -1, idc im not the boss of you) if hand 2 is better, or 0 if it's a tie")
     while game and deck.enough_in_deck(HAND_SIZE):
         card_list1 = __get_hand_cards(HAND_SIZE, deck)
         card_list2 = __get_hand_cards(HAND_SIZE, deck)
@@ -36,8 +36,8 @@ def main():
         hand2 = h.PokerHand(card_list2)
 
         print('')
-        print("Hand 1: ", str(hand1))
-        print("Hand 2: ", str(hand2))
+        print("HAND 1: ", str(hand1))
+        print("HAND 2: ", str(hand2))
         print('')
 
         correct_answer = hand1.compare_to(hand2)
@@ -52,7 +52,7 @@ def main():
         else:
             game = False
 
-        print("correct answer: ", correct_answer, "your answer: ", user_answer)
+        print("correct answer: ", "HAND", correct_answer, "| your answer: ", "HAND", user_answer)
         print("correct guesses: ", correct_guesses)
         if not game:
             print("GAME OVER")

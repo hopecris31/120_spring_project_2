@@ -19,6 +19,9 @@ c12 = c.Card(12, 'Hearts')
 c13 = c.Card(13, 'Hearts')
 c14 = c.Card(14, 'Hearts')
 
+s2 = c.Card(2, 'Spades')
+s3 = c.Card(3, 'Spades')
+
 
 card_list1 = [c10, c5, c6, c10, c5]
 card_list1b = [c14, c5, c4, c12, c7]
@@ -34,10 +37,16 @@ hand3b = h.PokerHand(card_list3b)
 
 
 
-card_list2 = [c13, c13, c13, c13, c4]  # pair
-card_list4 = [c13, c10, c10, c10, c10]  # pair
+card_list2 = [c13, c13, c13, c13, s3]  # pair
+card_list4 = [c10, s2, c10, c10, c10]  # pair
 hand2 = h.PokerHand(card_list2)
 hand4 = h.PokerHand(card_list4)
+
+
+print(hand4.get_hand_type())
+print(hand2.get_hand_type())
+if hand4.get_hand_type() == hand2.get_hand_type():
+    print('yes')
 
 #print(hand1.compare_to(hand1b))
 #print(hand3.compare_to(hand3b))
