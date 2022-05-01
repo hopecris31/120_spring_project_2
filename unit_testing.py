@@ -65,10 +65,8 @@ high_card2 = h.PokerHand([s2, c3, s5, c7, s14])
 high_card3 = h.PokerHand([c2, s3, c5, s7, s8])
 high_card4 = h.PokerHand([s14, s13, c5, c6, c7])
 high_card5 = h.PokerHand([c14, c11, s4, s6, s10])
-high_card6 = h.PokerHand([s14, s11, c4, c6, c10]) # high card ace
+high_card6 = h.PokerHand([s14, s11, c4, c6, c10])  # high card ace
 
-
-a = h.PokerHand([])
 
 if __name__ == "__main__":
     test_suite = t.create()

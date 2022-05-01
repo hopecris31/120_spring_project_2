@@ -5,8 +5,6 @@ models a deck of cards
 import random
 import card as c
 
-HAND_SIZE = 5
-
 
 class Deck:
 
@@ -30,12 +28,12 @@ class Deck:
         """
         return random.shuffle(self.__deck)
 
-    def enough_in_deck(self):
+    def enough_in_deck(self, hand_size):
         """
         checks if there are enough cards in the deck to make another hand
         :return: True if there are enough cards to make hand, False if not
         """
-        if len(self.__deck) >= HAND_SIZE:
+        if len(self.__deck) >= hand_size:
             enough = True
         else:
             enough = False
@@ -50,8 +48,3 @@ class Deck:
             return None
         else:
             return self.__deck.pop(0)
-        # for a list of n cards, pop(0) must reassign n-1 references.  O(n) running time.  try and make
-        # this take constant time
-        # make deal method, but just returning the current index of an iterator.  moves through deck
-        # deals the "current" card before moving to the next index.  if i = -1, then shuffle deck, set i=0
-        # indexing is a constant time operation
