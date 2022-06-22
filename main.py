@@ -1,7 +1,8 @@
+# Author: Hope Crisafi
+
 """
 main, runs the game
 """
-
 import poker_hand as h
 import deck as d
 

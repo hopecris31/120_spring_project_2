@@ -31,25 +31,6 @@ class PokerHand:
             hand_ranks.append(rank)
         return hand_ranks
 
-    def __get_hand_type(self):
-        """
-        determines the type of hand
-        :return: the type of hand it is
-        """
-
-        if self.__is_flush():
-            return 'Flush'
-        elif self.__is_two_pair():
-            return 'Two Pair'
-        elif self.__is_four_kind():
-            return 'Two Pair'  # because our code recognizes 4 kind as two pair
-        elif self.__is_three_kind():
-            return 'Pair'  # because our code recognizes 3 kind as pair
-        elif self.__is_pair():
-            return 'Pair'
-        else:
-            return 'High Card'
-
     def __is_flush(self):
         """
         checks if the card hand is a flush
@@ -164,7 +145,7 @@ class PokerHand:
         self_ranked = sorted(self_ranked, reverse=True)
         other_ranked = sorted(other_ranked, reverse=True)
 
-        for i in range(0, len(self_ranked)):
+        for i in range(len(self_ranked)):
             if self_ranked[i] > other_ranked[i]:
                 return 1
             elif self_ranked[i] < other_ranked[i]:
@@ -172,14 +153,18 @@ class PokerHand:
         return 0
 
     def __hand_type_worth(self):
+        """
+        determines the worth of a hand by giving it a numeric value
+        :return: the value of the hand type
+        """
         if self.__is_flush():
             return 4
         elif self.__is_four_kind():
-            return 3
+            return 3  # project description defines 4 of a kind as a 2 pair
         elif self.__is_two_pair():
             return 3
         elif self.__is_three_kind():
-            return 2
+            return 2  # project description defines 3 of a kind as a pair
         elif self.__is_pair():
             return 2
         else:
@@ -195,18 +180,17 @@ class PokerHand:
          zero if they are worth the SAME (a tie), and a positive number if
          self is worth MORE than other_hand
         """
-        if self.__hand_type_worth() > other.__hand_type_worth():
+        self_hand_worth = self.__hand_type_worth()
+        other_hand_worth = other.__hand_type_worth()
+        if self_hand_worth > other_hand_worth:
             return 1
-        if other.__hand_type_worth() > self.__hand_type_worth():
+        if other_hand_worth > self_hand_worth:
             return -1
 
-        if self.__get_hand_type() == other.__get_hand_type():
+        if self_hand_worth == other_hand_worth:
             return self.__compare_hand_same_type(other)
 
         return self.__compare_high_card(other)
-
-    def __str__(self):
-        return str(self.__hand)
 
     def __repr__(self):
         return str(self.__hand)
