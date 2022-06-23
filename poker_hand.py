@@ -64,10 +64,10 @@ class PokerHand:
             ranks = self.__get_hand_ranks()
             for card1 in range(len(ranks)):
                 for card2 in range(len(ranks) - card1 - 1):
-                    if ranks[card1] == ranks[card1 + card2 + 1]:
+                    if ranks[card1] == ranks[card2 + card1 + 1]:
                         pairs += 1
-                        ranks[card1] = 'no'
-                        ranks[card1 + card2 + 1] = 'nope'
+                        ranks[card1] = 1
+                        ranks[card1 + card2 + 1] = -1
                         if pairs == 2:
                             return True
         return False
@@ -182,6 +182,7 @@ class PokerHand:
         """
         self_hand_worth = self.__hand_type_worth()
         other_hand_worth = other.__hand_type_worth()
+
         if self_hand_worth > other_hand_worth:
             return 1
         if other_hand_worth > self_hand_worth:
