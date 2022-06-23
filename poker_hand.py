@@ -187,11 +187,8 @@ class PokerHand:
             return 1
         if other_hand_worth > self_hand_worth:
             return -1
-
-        if self_hand_worth == other_hand_worth:
+        else:
             return self.__compare_hand_same_type(other)
-
-        return self.__compare_high_card(other)
 
     def __repr__(self):
         return str(self.__hand)
